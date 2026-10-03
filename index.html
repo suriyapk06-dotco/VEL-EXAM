@@ -1,267 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VEL</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #07111f;
-            color: white;
-        }
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: auto;
-            padding: 30px 0;
-        }
-        .logo {
-            text-align: center;
-            font-size: 45px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            letter-spacing: 5px;
-        }
-        .card {
-            background: #0f1c30;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-        .hidden { display: none; }
-        h2 { margin-top: 0; }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 13px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #52657d;
-            background: #0a1729;
-            color: white;
-            font-size: 15px;
-        }
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            background: #4f8cff;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover { opacity: 0.9; }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .secondary { background: #27384e; }
-        .danger { background: #b92f48; }
-        .button-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .progress-area { margin-bottom: 25px; }
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .timer {
-            color: #ffd36b;
-            font-weight: bold;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #26374c;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            width: 10%;
-            background: #4f8cff;
-        }
-        .question-number {
-            color: #70aaff;
-            font-weight: bold;
-        }
-            margin-bottom: 10px;
-        .question {
-            font-size: 20px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .option {
-            display: block;
-            padding: 14px;
-            margin-bottom: 10px;
-            border: 1px solid #394c65;
-            border-radius: 10px;
-            background: #0b192b;
-            cursor: pointer;
-        }
-        .option:hover { border-color: #70aaff; }
-        .option input {
-            width: auto;
-            margin-right: 10px;
-            margin-bottom: 0;
-        }
-        .result-box {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .result {
-            background: #0a182a;
-            padding: 18px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .result strong {
-            display: block;
-            font-size: 25px;
-            margin-bottom: 5px;
-        }
-        .wrong-answer {
-            background: #24121a;
-            border: 1px solid #713040;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 12px;
-            text-align: left;
-        }
-        .your-answer {
-            color: #ff9aaa;
-            margin-top: 8px;
-        }
-        .correct-answer {
-            color: #66dda8;
-            margin-top: 8px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #394c65;
-            text-align: left;
-        }
-        th { color: #8ebeff; }
-        .success-message {
-            background: #102a21;
-            border: 1px solid #2f8f6b;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 600px) {
-            .container { width: 95%; }
-            .card { padding: 18px; }
-            .result-box { grid-template-columns: 1fr; }
-            .button-row { flex-direction: column; }
-            button { width: 100%; }
-            .question { font-size: 18px; }
-            table { font-size: 13px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VEL</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #07111f;
+    color: white;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+.logo {
+    text-align: center;
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    letter-spacing: 5px;
+}
+
+.card {
+    background: #0f1c30;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #52657d;
+    background: #0a1729;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #4f8cff;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.secondary {
+    background: #27384e;
+}
+
+.danger {
+    background: #b92f48;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.progress-area {
+    margin-bottom: 25px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.timer {
+    color: #ffd36b;
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #26374c;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 10%;
+    background: #4f8cff;
+    transition: width 0.3s ease;
+}
+
+.question-number {
+    color: #70aaff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.question {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.option {
+    display: block;
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #394c65;
+    border-radius: 10px;
+    background: #0b192b;
+    cursor: pointer;
+}
+
+.option:hover {
+    border-color: #70aaff;
+}
+
+.option input {
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.result-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.result {
+    background: #0a182a;
+    padding: 18px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.result strong {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.wrong-answer {
+    background: #24121a;
+    border: 1px solid #713040;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 12px;
+    text-align: left;
+}
+
+.your-answer {
+    color: #ff9aaa;
+    margin-top: 8px;
+}
+
+.correct-answer {
+    color: #66dda8;
+    margin-top: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #394c65;
+    text-align: left;
+}
+
+th {
+    color: #8ebeff;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 95%;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .result-box {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .question {
+        font-size: 18px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+</style>
 </head>
+
 <body>
+
 <div class="container">
-    <div class="logo">VEL</div>
+
+    <!-- VEL -->
+    <div class="logo">
+        VEL
+    </div>
+
+
+    <!-- STUDENT DETAILS -->
     <section id="studentPage" class="card">
+
         <h2>Student Details</h2>
-        <form id="studentForm">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Enter your name" required>
-            <label for="email">Email ID</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
-            <label for="mobile">Mobile</label>
-            <input type="text" id="mobile" placeholder="10-digit mobile number" maxlength="10" required>
-            <label for="college">College</label>
-            <input type="text" id="college" placeholder="Enter your college" required>
-            <label for="year">Year / Semester</label>
-            <input type="text" id="year" placeholder="Enter year / semester" required>
-            <label for="department">Department</label>
-            <input type="text" id="department" placeholder="Enter your department" required>
+
+        <form id="studentForm" onsubmit="startExam(event)">
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <label>Email ID</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <label>Mobile</label>
+
+            <input
+                type="text"
+                id="mobile"
+                placeholder="10-digit mobile number"
+                maxlength="10"
+                inputmode="numeric"
+                required
+            >
+
+
+            <label>College</label>
+
+            <input
+                type="text"
+                id="college"
+                placeholder="Enter your college"
+                required
+            >
+
+
+            <label>Year / Semester</label>
+
+            <input
+                type="text"
+                id="year"
+                placeholder="Enter year / semester"
+                required
+            >
+
+
+            <label>Department</label>
+
+            <input
+                type="text"
+                id="department"
+                placeholder="Enter your department"
+                required
+            >
+
+
             <div class="button-row">
+
                 <span></span>
-                <button type="submit">Start Examination</button>
+
+                <button type="submit">
+                    Start Examination
+                </button>
+
             </div>
+
         </form>
+
+
         <br>
-        <button type="button" class="secondary" onclick="showHostLogin()">
+
+        <button
+            type="button"
+            class="secondary"
+            onclick="showHostLogin()"
+        >
             Host / Admin
         </button>
+
     </section>
+
+
+    <!-- EXAM PAGE -->
     <section id="examPage" class="card hidden">
+
         <div class="progress-area">
+
             <div class="progress-text">
-                <span id="questionNumber">Question 1 of 10</span>
-                <span id="timer" class="timer">10:00</span>
+
+                <span id="questionNumber">
+                    Question 1 of 10
+                </span>
+
+                <span id="timer" class="timer">
+                    10:00
+                </span>
+
             </div>
+
+
             <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
+
+                <div
+                    id="progressFill"
+                    class="progress-fill"
+                ></div>
+
             </div>
+
         </div>
+
+
         <div id="questionArea"></div>
-        <p id="questionError" style="color:#ff8797;"></p>
+
+
+        <p
+            id="questionError"
+            style="color:#ff8797;"
+        ></p>
+
+
         <div class="button-row">
-            <button id="previousButton" class="secondary" type="button">
+
+            <button
+                id="previousButton"
+                class="secondary"
+                type="button"
+                onclick="previousQuestion()"
+            >
                 Previous
             </button>
-            <button id="nextButton" type="button">
+
+
+            <button
+                id="nextButton"
+                type="button"
+                onclick="nextQuestion()"
+            >
                 Next
             </button>
+
         </div>
+
     </section>
+
+
+    <!-- RESULT PAGE -->
     <section id="resultPage" class="card hidden">
-        <h2>Exam Submitted Successfully</h2>
-        <div class="success-message">
-            Your examination has been submitted successfully.
-        </div>
+
+        <h2>
+            Exam Submitted Successfully
+        </h2>
+
+
         <div class="result-box">
+
             <div class="result">
-                <strong id="score">0/10</strong>
+
+                <strong id="score">
+                    0/10
+                </strong>
+
                 Score
+
             </div>
+
+
             <div class="result">
-                <strong id="correct">0</strong>
+
+                <strong id="correct">
+                    0
+                </strong>
+
                 Correct
+
             </div>
+
+
             <div class="result">
-                <strong id="timeTaken">0</strong>
+
+                <strong id="timeTaken">
+                    0
+                </strong>
+
                 Time
+
             </div>
+
         </div>
+
+
         <div id="wrongAnswers"></div>
+
     </section>
+
+
+    <!-- HOST LOGIN -->
     <section id="hostLoginPage" class="card hidden">
-        <h2>Host / Admin Access</h2>
-        <form id="hostForm">
-            <label for="hostPassword">Host Password</label>
+
+        <h2>
+            Host / Admin Access
+        </h2>
+
+
+        <form onsubmit="hostLogin(event)">
+
+            <label>
+                Host Password
+            </label>
+
+
             <input
                 type="password"
                 id="hostPassword"
                 placeholder="Enter host password"
                 required
             >
-            <p id="hostError" style="color:#ff8797;"></p>
+
+
+            <p
+                id="hostError"
+                style="color:#ff8797;"
+            ></p>
+
+
             <div class="button-row">
+
                 <button
                     type="button"
                     class="secondary"
@@ -269,587 +508,1187 @@
                 >
                     Back
                 </button>
+
+
                 <button type="submit">
                     Open Host Panel
                 </button>
+
             </div>
+
         </form>
+
     </section>
+
+
+    <!-- HOST PANEL -->
     <section id="hostPage" class="card hidden">
-        <h2>Host Dashboard</h2>
+
+        <h2>
+            Host Dashboard
+        </h2>
+
+
         <p>
             Completed Exams:
             <strong id="participantCount">0</strong>
         </p>
+
+
         <p>
             Average Score:
             <strong id="averageScore">0%</strong>
         </p>
+
+
         <div id="hostResults"></div>
+
+
         <div class="button-row">
-            <button class="secondary" onclick="showHostLogin()">
+
+            <button
+                class="secondary"
+                onclick="showHostLogin()"
+            >
                 Lock Host Panel
             </button>
-            <button class="danger" onclick="clearResults()">
+
+
+            <button
+                class="danger"
+                onclick="clearResults()"
+            >
                 Clear Results
             </button>
+
         </div>
+
     </section>
+
 </div>
+
+
 <script>
-    const questions = [
-        {
-            question: "What does DOM stand for?",
-            options: [
-                "Document Object Model",
-                "Data Object Management",
-                "Document Oriented Model",
-                "Data Oriented Method"
-            ],
-            answer: 0
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-the URL?",
-        },
-        {
-            question:
-                "Which DOM method is commonly used to select an HTML element by its ID?",
-            options: [
-                "getElementById()",
-                "getElement()",
-                "selectById()",
-                "findElementById()"
-            ],
-            answer: 0
-            question:
-                "Which event occurs when a user clicks an HTML element?",
-            options: [
-                "onload",
-                "onchange",
-                "onclick",
-                "onmouseover"
-            ],
-            answer: 2
-            question:
-                "Which property is used to modify the CSS style of an element through the DOM?",
-            options: [
-                "element.css()",
-                "element.style",
-                "element.design()",
-                "element.format()"
-            ],
-            answer: 1
-            question:
-                "Which HTTP method is generally used to submit form data without appending the data to 
-            options: [
-                "GET",
-                "POST",
-                "PUT",
-                "DELETE"
-            ],
-            answer: 1
-            question:
-                "Which method is called by the servlet container when a servlet is first initialized?",
-            options: [
-                "service()",
-                "start()",
-                "init()",
-                "initialize()"
-            ],
-        },
-            answer: 2
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-            question:
-                "Which method is responsible for processing client requests in a servlet?",
-            options: [
-                "init()",
-                "service()",
-                "destroy()",
-                "close()"
-            ],
-            answer: 1
-            question:
-                "Which technique can be used to maintain a user's state across multiple HTTP requests?",
-            options: [
-                "Session handling",
-                "CSS styling",
-                "DOM traversal",
-                "JDBC driver loading"
-            ],
-            answer: 0
-            question:
-                "In JDBC, which object is commonly used to execute SQL statements against a database?",
-            options: [
-                "Connection",
-                "Statement",
-                "DriverManager",
-                "ResultSet"
-            ],
-            answer: 1
-            question:
-                "A servlet needs to connect to a database, execute an SQL query, and process the 
-returned records. Which sequence is most appropriate?",
-            options: [
-                "ResultSet fi Connection fi Statement fi DriverManager",
-                "DriverManager fi Connection fi Statement fi ResultSet",
-                "Statement fi DriverManager fi ResultSet fi Connection",
-                "Connection fi ResultSet fi DriverManager fi Statement"
-            ],
-            answer: 1
-        }
+
+/* =====================================================
+   QUESTIONS
+===================================================== */
+
+const questions = [
+
+    {
+        question: "What does DOM stand for?",
+
+        options: [
+            "Document Object Model",
+            "Data Object Management",
+            "Document Oriented Model",
+            "Data Oriented Method"
+        ],
+
+        answer: 0
+    },
+
+
+    {
+        question:
+            "Which DOM method is commonly used to select an HTML element by its ID?",
+
+        options: [
+            "getElementById()",
+            "getElement()",
+            "selectById()",
+            "findElementById()"
+        ],
+
+        answer: 0
+    },
+
+
+    {
+        question:
+            "Which event occurs when a user clicks an HTML element?",
+
+        options: [
+            "onload",
+            "onchange",
+            "onclick",
+            "onmouseover"
+        ],
+
+        answer: 2
+    },
+
+
+    {
+        question:
+            "Which property is used to modify the CSS style of an element through the DOM?",
+
+        options: [
+            "element.css()",
+            "element.style",
+            "element.design()",
+            "element.format()"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Which HTTP method is generally used to submit form data without appending the data to the URL?",
+
+        options: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Which method is called by the servlet container when a servlet is first initialized?",
+
+        options: [
+            "service()",
+            "start()",
+            "init()",
+            "initialize()"
+        ],
+
+        answer: 2
+    },
+
+
+    {
+        question:
+            "Which method is responsible for processing client requests in a servlet?",
+
+        options: [
+            "init()",
+            "service()",
+            "destroy()",
+            "close()"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Which technique can be used to maintain a user's state across multiple HTTP requests?",
+
+        options: [
+            "Session handling",
+            "CSS styling",
+            "DOM traversal",
+            "JDBC driver loading"
+        ],
+
+        answer: 0
+    },
+
+
+    {
+        question:
+            "In JDBC, which object is commonly used to execute SQL statements against a database?",
+
+        options: [
+            "Connection",
+            "Statement",
+            "DriverManager",
+            "ResultSet"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "A servlet needs to connect to a database, execute an SQL query, and process the returned records. Which sequence is most appropriate?",
+
+        options: [
+            "ResultSet → Connection → Statement → DriverManager",
+            "DriverManager → Connection → Statement → ResultSet",
+            "Statement → DriverManager → ResultSet → Connection",
+            "Connection → ResultSet → DriverManager → Statement"
+        ],
+
+        answer: 1
+    }
+
+];
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let currentQuestion = 0;
+
+let userAnswers =
+    Array(questions.length).fill(null);
+
+let student = {};
+
+let startTime = null;
+
+let timer = null;
+
+
+/* =====================================================
+   GET ELEMENT
+===================================================== */
+
+function get(id) {
+    return document.getElementById(id);
+}
+
+
+/* =====================================================
+   SHOW PAGE
+===================================================== */
+
+function showPage(pageId) {
+
+    const pages = [
+        "studentPage",
+        "examPage",
+        "resultPage",
+        "hostLoginPage",
+        "hostPage"
     ];
-    let currentQuestion = 0;
-    let userAnswers = Array(questions.length).fill(null);
-    let student = {};
-    let startTime;
-    let timer;
-    function get(id) {
-        return document.getElementById(id);
+
+    pages.forEach(function(page) {
+
+        const element = get(page);
+
+        if (element) {
+            element.classList.add("hidden");
+        }
+
+    });
+
+
+    const selectedPage = get(pageId);
+
+    if (selectedPage) {
+        selectedPage.classList.remove("hidden");
     }
-    function showPage(pageId) {
-        const pages = [
-            "studentPage",
-            "examPage",
-            "resultPage",
-            "hostLoginPage",
-            "hostPage"
-        ];
-        pages.forEach(function(page) {
-            get(page).classList.add("hidden");
-        });
-        get(pageId).classList.remove("hidden");
-        window.scrollTo(0, 0);
+
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   START EXAM
+   THIS IS THE IMPORTANT FIX
+===================================================== */
+
+function startExam(event) {
+
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
-    get("studentForm").addEventListener(
-        "submit",
-        function(event) {
-            event.preventDefault();
-            const mobile = get("mobile").value.trim();
-            if (!/^[0-9]{10}$/.test(mobile)) {
-                alert(
-                    "Please enter a valid 10-digit mobile number."
-                );
-                return;
-            }
-            student = {
-                name: get("name").value.trim(),
-            };
-                email: get("email").value.trim(),
-                mobile: mobile,
-                college: get("college").value.trim(),
-                year: get("year").value.trim(),
-                department: get("department").value.trim()
-            currentQuestion = 0;
-            userAnswers =
-                Array(questions.length).fill(null);
-            startTime = Date.now();
-            showPage("examPage");
-            displayQuestion();
-            startTimer();
+
+
+    const name =
+        get("name").value.trim();
+
+    const email =
+        get("email").value.trim();
+
+    const mobile =
+        get("mobile").value.trim();
+
+    const college =
+        get("college").value.trim();
+
+    const year =
+        get("year").value.trim();
+
+    const department =
+        get("department").value.trim();
+
+
+    /* Validate fields */
+
+    if (
+        !name ||
+        !email ||
+        !mobile ||
+        !college ||
+        !year ||
+        !department
+    ) {
+
+        alert("Please fill all student details.");
+
+        return false;
+    }
+
+
+    /* Validate mobile */
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+
+        alert(
+            "Please enter a valid 10-digit mobile number."
+        );
+
+        return false;
+    }
+
+
+    /* Store student */
+
+    student = {
+
+        name: name,
+
+        email: email,
+
+        mobile: mobile,
+
+        college: college,
+
+        year: year,
+
+        department: department
+
+    };
+
+
+    /* Reset examination */
+
+    currentQuestion = 0;
+
+    userAnswers =
+        Array(questions.length).fill(null);
+
+
+    /* Start time */
+
+    startTime = Date.now();
+
+
+    /* Clear previous errors */
+
+    get("questionError").textContent = "";
+
+
+    /* SHOW QUESTION PAGE */
+
+    showPage("examPage");
+
+
+    /* SHOW QUESTION 1 */
+
+    displayQuestion();
+
+
+    /* START 10 MINUTE TIMER */
+
+    startTimer();
+
+
+    return false;
+}
+
+
+/* =====================================================
+   DISPLAY QUESTION
+===================================================== */
+
+function displayQuestion() {
+
+    const question =
+        questions[currentQuestion];
+
+
+    /* Question number */
+
+    get("questionNumber").textContent =
+        "Question " +
+        (currentQuestion + 1) +
+        " of " +
+        questions.length;
+
+
+    /* Progress */
+
+    const percentage =
+        ((currentQuestion + 1) /
+        questions.length) * 100;
+
+
+    get("progressFill").style.width =
+        percentage + "%";
+
+
+    /* Build question */
+
+    let html = "";
+
+
+    html +=
+        '<div class="question-number">' +
+        'QUESTION ' +
+        (currentQuestion + 1) +
+        '</div>';
+
+
+    html +=
+        '<div class="question">' +
+        escapeHTML(question.question) +
+        '</div>';
+
+
+    /* Options */
+
+    question.options.forEach(
+        function(option, index) {
+
+            const checked =
+                userAnswers[currentQuestion] === index
+                ? "checked"
+                : "";
+
+
+            html += `
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="${index}"
+                        ${checked}
+                        onchange="selectAnswer(${index})"
+                    >
+
+                    ${String.fromCharCode(65 + index)}.
+                    ${escapeHTML(option)}
+
+                </label>
+
+            `;
+
         }
     );
-    function displayQuestion() {
-        const question = questions[currentQuestion];
-        get("questionNumber").textContent =
-            "Question " +
-            (currentQuestion + 1) +
-            " of " +
-            questions.length;
-        const percentage =
-            ((currentQuestion + 1) /
-            questions.length) * 100;
-        get("progressFill").style.width =
-            percentage + "%";
-        let html = "";
-        html +=
-            '<div class="question-number">' +
-            'QUESTION ' +
-            (currentQuestion + 1) +
-            '</div>';
-        html +=
-            '<div class="question">' +
-            escapeHTML(question.question) +
-            '</div>';
-        question.options.forEach(
-            function(option, index) {
-                const checked =
-                    userAnswers[currentQuestion] === index
-                    ? "checked"
-                    : "";
-                html += `
-                    <label class="option">
-                        <input
-                            type="radio"
-                            name="answer"
-                            value="${index}"
-                            ${checked}
-                        >
-                        ${String.fromCharCode(65 + index)}.
-                        ${escapeHTML(option)}
-                    </label>
-                `;
-            }
-        );
-        get("questionArea").innerHTML = html;
-        const options =
-            document.querySelectorAll(
-                'input[name="answer"]'
-            );
-        options.forEach(
-            function(option) {
-                option.addEventListener(
-                    "change",
-                    function() {
-                        userAnswers[currentQuestion] =
-                            Number(this.value);
-                    }
-                );
-            }
-        );
-        get("previousButton").disabled =
-            currentQuestion === 0;
-        if (
-            currentQuestion ===
-        ) {
-            questions.length - 1
-            get("nextButton").textContent =
-                "Submit Exam";
-        } else {
-            get("nextButton").textContent =
-                "Next";
-        }
+
+
+    get("questionArea").innerHTML =
+        html;
+
+
+    /* Previous */
+
+    get("previousButton").disabled =
+        currentQuestion === 0;
+
+
+    /* Next / Submit */
+
+    if (
+        currentQuestion ===
+        questions.length - 1
+    ) {
+
+        get("nextButton").textContent =
+            "Submit Exam";
+
+    } else {
+
+        get("nextButton").textContent =
+            "Next";
+
     }
-    get("previousButton").addEventListener(
-        "click",
-        function() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                get("questionError").textContent = "";
-                displayQuestion();
-            }
-        }
-    );
-    get("nextButton").addEventListener(
-        "click",
-        function() {
-            if (
-                userAnswers[currentQuestion] === null
-            ) {
-            }
-                get("questionError").textContent =
-                    "Please select an answer.";
-                return;
-            get("questionError").textContent = "";
-            if (
-                currentQuestion <
-                questions.length - 1
-            ) {
-                currentQuestion++;
-                displayQuestion();
-            } else {
-                submitExam(false);
-            }
-        }
-    );
-    function startTimer() {
-        clearInterval(timer);
-        const totalSeconds = 10 * 60;
-        function updateTimer() {
-            const elapsed =
-                Math.floor(
-                    (Date.now() - startTime) / 1000
-                );
-            const remaining =
-                Math.max(
-                    0,
-                    totalSeconds - elapsed
-                );
-            const minutes =
-                Math.floor(
-                    remaining / 60
-                );
-            const seconds =
-                remaining % 60;
-            get("timer").textContent =
-                String(minutes).padStart(2, "0") +
-                ":" +
-                String(seconds).padStart(2, "0");
-            if (remaining === 0) {
-                clearInterval(timer);
-                submitExam(true);
-            }
-        }
-        updateTimer();
+
+
+    get("questionError").textContent = "";
+}
+
+
+/* =====================================================
+   SELECT ANSWER
+===================================================== */
+
+function selectAnswer(answerIndex) {
+
+    userAnswers[currentQuestion] =
+        Number(answerIndex);
+
+
+    get("questionError").textContent = "";
+}
+
+
+/* =====================================================
+   PREVIOUS QUESTION
+===================================================== */
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+
+        currentQuestion--;
+
+        displayQuestion();
+
     }
-        timer =
-            setInterval(
-                updateTimer,
-                1000
-            );
-    function submitExam(autoSubmit = false) {
-        clearInterval(timer);
-        if (!autoSubmit) {
-            for (
-                let i = 0;
-                i < userAnswers.length;
-                i++
-            ) {
-            }
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
+
+function nextQuestion() {
+
+    /* Check current answer */
+
+    if (
+        userAnswers[currentQuestion] === null
+    ) {
+
+        get("questionError").textContent =
+            "Please select an answer.";
+
+        return;
+    }
+
+
+    /* Next question */
+
+    if (
+        currentQuestion <
+        questions.length - 1
+    ) {
+
+        currentQuestion++;
+
+        displayQuestion();
+
+        return;
+    }
+
+
+    /* Last question */
+
+    submitExam(false);
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer() {
+
+    clearInterval(timer);
+
+
+    const totalSeconds =
+        10 * 60;
+
+
+    function updateTimer() {
+
+        if (!startTime) {
+            return;
         }
-                if (userAnswers[i] === null) {
-                    get("questionError").textContent =
-                        "Please answer all 10 questions before submitting.";
-                    return;
-                }
-        let score = 0;
-        questions.forEach(
-            function(question, index) {
-                if (
-                    userAnswers[index] ===
-                    question.answer
-                ) {
-                }
-            }
-        );
-                    score++;
+
+
         const elapsed =
             Math.floor(
                 (Date.now() - startTime) / 1000
             );
-        const timeText =
-            Math.floor(elapsed / 60) +
-            "m " +
-            (elapsed % 60) +
-            "s";
-        const result = {
-            name: student.name,
-            email: student.email,
-            mobile: student.mobile,
-            college: student.college,
-            year: student.year,
-            department: student.department,
-            score: score,
-            total: questions.length,
-            percentage: score * 10,
-            time: timeText,
-            date: new Date().toLocaleString()
-        };
-        saveResult(result);
-        get("score").textContent =
-            score + "/" + questions.length;
-        get("correct").textContent =
-            score;
-        get("timeTaken").textContent =
-            timeText;
-        showWrongAnswers();
-        showPage("resultPage");
-    }
-    function showWrongAnswers() {
-        let wrongHTML = "";
-        questions.forEach(
-            function(question, index) {
-                const userAnswer =
-                    userAnswers[index];
-                if (
-                    userAnswer !==
-                    question.answer
-                ) {
-                    const yourAnswer =
-                        userAnswer === null
-                        ? "Not answered"
-                        : String.fromCharCode(
-                            65 + userAnswer
-                        ) +
-                        ". " +
-                        question.options[userAnswer];
-                    const correctAnswer =
-                        String.fromCharCode(
-                            65 + question.answer
-                        ) +
-                        ". " +
-                        question.options[
-                            question.answer
-                        ];
-                    wrongHTML += `
-                        <div class="wrong-answer">
-                            <strong>
-                                Question ${index + 1}
-                            </strong>
-                            <p>
-                                ${escapeHTML(
-                                    question.question
-                                )}
-                            </p>
-                            <div class="your-answer">
-                                <b>Your answer:</b>
-                                ${escapeHTML(yourAnswer)}
-                            </div>
-                            <div class="correct-answer">
-                                <b>Correct answer:</b>
-                                ${escapeHTML(correctAnswer)}
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-        );
-        if (wrongHTML === "") {
-            wrongHTML = `
-                <h3>Answer Review</h3>
-                <p>
-                    Excellent! All answers are correct.
-                </p>
-            `;
-        } else {
-            wrongHTML =
-                "<h3>Wrong Answers & Correct Answers</h3>" +
-                wrongHTML;
+
+
+        const remaining =
+            Math.max(
+                0,
+                totalSeconds - elapsed
+            );
+
+
+        const minutes =
+            Math.floor(
+                remaining / 60
+            );
+
+
+        const seconds =
+            remaining % 60;
+
+
+        get("timer").textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+
+
+        /* Auto submit */
+
+        if (remaining <= 0) {
+
+            clearInterval(timer);
+
+            submitExam(true);
+
         }
-        get("wrongAnswers").innerHTML =
-            wrongHTML;
+
     }
-    function getResults() {
+
+
+    updateTimer();
+
+
+    timer =
+        setInterval(
+            updateTimer,
+            1000
+        );
+}
+
+
+/* =====================================================
+   SUBMIT EXAM
+===================================================== */
+
+function submitExam(autoSubmit) {
+
+    clearInterval(timer);
+
+
+    /* If manually submitted,
+       require every question */
+
+    if (!autoSubmit) {
+
+        for (
+            let i = 0;
+            i < userAnswers.length;
+            i++
+        ) {
+
+            if (userAnswers[i] === null) {
+
+                get("questionError").textContent =
+                    "Please answer all 10 questions before submitting.";
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    /* Calculate score */
+
+    let score = 0;
+
+
+    questions.forEach(
+        function(question, index) {
+
+            if (
+                userAnswers[index] ===
+                question.answer
+            ) {
+
+                score++;
+
+            }
+
+        }
+    );
+
+
+    /* Calculate time */
+
+    const elapsed =
+        Math.floor(
+            (Date.now() - startTime) / 1000
+        );
+
+
+    const timeText =
+        Math.floor(elapsed / 60) +
+        "m " +
+        (elapsed % 60) +
+        "s";
+
+
+    /* Result */
+
+    const result = {
+
+        name: student.name,
+
+        email: student.email,
+
+        mobile: student.mobile,
+
+        college: student.college,
+
+        year: student.year,
+
+        department: student.department,
+
+        score: score,
+
+        total: questions.length,
+
+        percentage:
+            Math.round(
+                (score / questions.length) * 100
+            ),
+
+        time: timeText,
+
+        date:
+            new Date().toLocaleString()
+
+    };
+
+
+    /* Save */
+
+    saveResult(result);
+
+
+    /* Show score */
+
+    get("score").textContent =
+        score + "/" + questions.length;
+
+
+    get("correct").textContent =
+        score;
+
+
+    get("timeTaken").textContent =
+        timeText;
+
+
+    /* Show wrong answers */
+
+    showWrongAnswers();
+
+
+    /* Show result */
+
+    showPage("resultPage");
+}
+
+
+/* =====================================================
+   WRONG ANSWERS
+===================================================== */
+
+function showWrongAnswers() {
+
+    let wrongHTML = "";
+
+
+    questions.forEach(
+        function(question, index) {
+
+            const userAnswer =
+                userAnswers[index];
+
+
+            /* Show only wrong/unanswered */
+
+            if (
+                userAnswer !==
+                question.answer
+            ) {
+
+                const yourAnswer =
+                    userAnswer === null
+                    ? "Not answered"
+                    : String.fromCharCode(
+                        65 + userAnswer
+                    ) +
+                    ". " +
+                    question.options[userAnswer];
+
+
+                const correctAnswer =
+                    String.fromCharCode(
+                        65 + question.answer
+                    ) +
+                    ". " +
+                    question.options[
+                        question.answer
+                    ];
+
+
+                wrongHTML += `
+
+                    <div class="wrong-answer">
+
+                        <strong>
+                            Question ${index + 1}
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(
+                                question.question
+                            )}
+                        </p>
+
+                        <div class="your-answer">
+
+                            <b>Your answer:</b>
+                            ${escapeHTML(yourAnswer)}
+
+                        </div>
+
+                        <div class="correct-answer">
+
+                            <b>Correct answer:</b>
+                            ${escapeHTML(correctAnswer)}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+    /* All correct */
+
+    if (wrongHTML === "") {
+
+        wrongHTML = `
+
+            <h3>
+                Answer Review
+            </h3>
+
+            <p>
+                Excellent! All answers are correct.
+            </p>
+
+        `;
+
+    } else {
+
+        wrongHTML =
+            "<h3>Wrong Answers & Correct Answers</h3>" +
+            wrongHTML;
+
+    }
+
+
+    get("wrongAnswers").innerHTML =
+        wrongHTML;
+}
+
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+function getResults() {
+
+    try {
+
         return JSON.parse(
             localStorage.getItem(
                 "VEL_MCQ_RESULTS"
             ) || "[]"
         );
+
+    } catch (error) {
+
+        return [];
+
     }
-    function saveResult(result) {
-        const results =
-            getResults();
-        results.push(result);
-        localStorage.setItem(
-            "VEL_MCQ_RESULTS",
-            JSON.stringify(results)
-        );
+}
+
+
+function saveResult(result) {
+
+    const results =
+        getResults();
+
+
+    results.push(result);
+
+
+    localStorage.setItem(
+        "VEL_MCQ_RESULTS",
+        JSON.stringify(results)
+    );
+}
+
+
+/* =====================================================
+   HOST PASSWORD
+===================================================== */
+
+const HOST_PASSWORD =
+    "VEL@2026";
+
+
+/* =====================================================
+   HOST LOGIN PAGE
+===================================================== */
+
+function showHostLogin() {
+
+    showPage("hostLoginPage");
+
+
+    get("hostPassword").value = "";
+
+    get("hostError").textContent = "";
+}
+
+
+/* =====================================================
+   BACK TO STUDENT PAGE
+===================================================== */
+
+function showStudentPage() {
+
+    showPage("studentPage");
+}
+
+
+/* =====================================================
+   HOST LOGIN
+===================================================== */
+
+function hostLogin(event) {
+
+    event.preventDefault();
+
+
+    const password =
+        get("hostPassword").value;
+
+
+    if (
+        password === HOST_PASSWORD
+    ) {
+
+        showHostResults();
+
+    } else {
+
+        get("hostError").textContent =
+            "Incorrect host password.";
+
     }
-    const HOST_PASSWORD =
-        "VEL@2026";
-    function showHostLogin() {
-        showPage("hostLoginPage");
-        get("hostPassword").value = "";
-        get("hostError").textContent = "";
-    }
-    function showStudentPage() {
-        showPage("studentPage");
-    }
-    get("hostForm").addEventListener(
-        "submit",
-        function(event) {
-            event.preventDefault();
-            if (
-                get("hostPassword").value ===
-                HOST_PASSWORD
-            ) {
-                showHostResults();
-            } else {
-                get("hostError").textContent =
-                    "Incorrect host password.";
-            }
+
+
+    return false;
+}
+
+
+/* =====================================================
+   HOST RESULTS
+===================================================== */
+
+function showHostResults() {
+
+    const results =
+        getResults();
+
+
+    get("participantCount").textContent =
+        results.length;
+
+
+    let totalPercentage = 0;
+
+
+    results.forEach(
+        function(result) {
+
+            totalPercentage +=
+                Number(result.percentage) || 0;
+
         }
     );
-    function showHostResults() {
-        const results =
-            getResults();
-        get("participantCount").textContent =
-            results.length;
-        let totalPercentage = 0;
+
+
+    const average =
+        results.length === 0
+        ? 0
+        : Math.round(
+            totalPercentage /
+            results.length
+        );
+
+
+    get("averageScore").textContent =
+        average + "%";
+
+
+    let table = "";
+
+
+    if (results.length === 0) {
+
+        table =
+            "<p>No completed exams yet.</p>";
+
+    } else {
+
+        table = `
+
+            <table>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>College</th>
+
+                    <th>Year</th>
+
+                    <th>Department</th>
+
+                    <th>Score</th>
+
+                    <th>Time</th>
+
+                </tr>
+
+        `;
+
+
         results.forEach(
             function(result) {
-                totalPercentage +=
-                    result.percentage;
+
+                table += `
+
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(
+                                result.name
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                result.college
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                result.year
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                result.department
+                            )}
+                        </td>
+
+                        <td>
+                            ${result.score}/${result.total}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                result.time
+                            )}
+                        </td>
+
+                    </tr>
+
+                `;
+
             }
         );
-        const average =
-            results.length === 0
-            ? 0
-            : Math.round(
-                totalPercentage /
-                results.length
-            );
-        get("averageScore").textContent =
-            average + "%";
-        let table = "";
-        if (results.length === 0) {
-            table =
-                "<p>No completed exams yet.</p>";
-        } else {
-            table = `
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>College</th>
-                        <th>Year</th>
-                        <th>Department</th>
-                        <th>Score</th>
-                        <th>Time</th>
-                    </tr>
-            `;
-            results.forEach(
-                function(result) {
-                    table += `
-                        <tr>
-                            <td>
-                                ${escapeHTML(result.name)}
-                            </td>
-                            <td>
-                                ${escapeHTML(result.college)}
-                            </td>
-                            <td>
-                                ${escapeHTML(result.year)}
-                            </td>
-                            <td>
-                                ${escapeHTML(result.department)}
-                            </td>
-                            <td>
-                                ${result.score}/${result.total}
-                            </td>
-                            <td>
-                }
-                    `;
-                        </tr>
-                                ${escapeHTML(result.time)}
-                            </td>
-            );
-            table += "</table>";
-        }
-        get("hostResults").innerHTML =
-            table;
-        showPage("hostPage");
+
+
+        table += "</table>";
+
     }
-    function clearResults() {
-        const confirmDelete =
-            confirm(
-                "Clear all exam results?"
-            );
-        if (confirmDelete) {
-            localStorage.removeItem(
-                "VEL_MCQ_RESULTS"
-            );
-            showHostResults();
-        }
+
+
+    get("hostResults").innerHTML =
+        table;
+
+
+    showPage("hostPage");
+}
+
+
+/* =====================================================
+   CLEAR RESULTS
+===================================================== */
+
+function clearResults() {
+
+    const confirmDelete =
+        confirm(
+            "Clear all exam results?"
+        );
+
+
+    if (confirmDelete) {
+
+        localStorage.removeItem(
+            "VEL_MCQ_RESULTS"
+        );
+
+
+        showHostResults();
+
     }
-    function escapeHTML(text) {
-        return String(text)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
+}
+
+
+/* =====================================================
+   HTML SECURITY
+===================================================== */
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
 </script>
+
 </body>
 </html>
